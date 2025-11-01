@@ -2,15 +2,18 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 let books = require("./booksdb.js");
 const regd_users = express.Router();
+const usersData = require('../data/user.data.js')
 
-let users = [];
 
-const isValid = (username)=>{ //returns boolean
-//write code to check is the username is valid
+const isValid = (username)=>{ 
+  //write code to check is the username is valid
+  return (usersData.findUserIndex(username) >= 0);
 }
 
-const authenticatedUser = (username,password)=>{ //returns boolean
-//write code to check if username and password match the one we have in records.
+const authenticatedUser = (username,password)=>{ 
+  const user = usersData.getUser(username);
+  const { username: storedUsername, password: storedPassword} = user;
+  return (user && (storedUsername === username) && (storedPassword === password));
 }
 
 //only registered users can login
@@ -27,4 +30,4 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
 
 module.exports.authenticated = regd_users;
 module.exports.isValid = isValid;
-module.exports.users = users;
+module.exports.users = usersData.users;
