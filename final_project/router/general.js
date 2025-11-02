@@ -2,6 +2,7 @@ const express = require('express');
 let books = require("./booksdb.js");
 let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
+const bookUtils = require('../utils/books.utils.js');
 const public_users = express.Router();
 
 
@@ -12,14 +13,15 @@ public_users.post("/register", (req,res) => {
 
 // Get the book list available in the shop
 public_users.get('/',function (req, res) {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+  //Write your code here {users}
+  return res.status(200).json(books); 
 });
 
 // Get book details based on ISBN
 public_users.get('/isbn/:isbn',function (req, res) {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+  const isbn = req.params.isbn;
+  const book = bookUtils.getBookByIsbn(isbn);
+  return res.status(200).json(book);
  });
   
 // Get book details based on author
