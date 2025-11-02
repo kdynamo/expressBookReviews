@@ -19,6 +19,17 @@ const getBookByTitle = (title) => {
        const titleBook = titleIndex ? books[titleIndex] : undefined;
      return titleBook;
 };
+
+const getReviewsByIsbn = (isbn) => {
+      const book = getBookByIsbn(isbn);
+      
+      let reviews = {};
+      if (book) {
+        reviews = book.reviews;
+      }
+      return reviews;
+}
 module.exports.getBookByIsbn = getBookByIsbn;
 module.exports.getBooksByAuthor = getBooksByAuthor;
 module.exports.getBookByTitle = getBookByTitle;
+module.exports.getReviewsByIsbn = getReviewsByIsbn;
