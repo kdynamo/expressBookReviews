@@ -8,9 +8,17 @@ const getBookByIsbn = (isbn) => {
 
 const getBooksByAuthor = (author) => {
       const authoredBooks = Object.keys(books)
-        .filter((index) => (books[index].author === author))
+        .filter((index) => (books[index].title === title))
         .map((bookIndex) => (books[bookIndex]));
       return authoredBooks;
 };
+
+const getBookByTitle = (title) => {
+      const titleIndex = Object.keys(books)
+        .find((index) => (books[index].title === title));
+       const titleBook = titleIndex ? books[titleIndex] : undefined;
+     return titleBook;
+};
 module.exports.getBookByIsbn = getBookByIsbn;
 module.exports.getBooksByAuthor = getBooksByAuthor;
+module.exports.getBookByTitle = getBookByTitle;
