@@ -14,18 +14,38 @@ const findUserIndex = (username) => {
 }
 
 const addUser = (user, replace = false) => {
-   let userIndex = findUserIndex(user.username);
-   if (userIndex >= 0) {
-     if (replace) {
-        users[userIndex] = user;
-     } else {
-        userIndex = -1;
-     }
-  } else {
-    userIndex = users.length;
-    users.concat(user);
+   let message = '';
+   let addCode = 0;
+   const {
+      username = '',
+      password = '',
+    } = user;
+   if ((username === '') || (password === '')) {
+     message = 'Username and Password must be provided';
+     code = 101;
+   } else {
+    let userIndex = findUserIndex(username);
+    if (userIndex >= 0) {
+      if (replace) {
+          users[userIndex] = user;
+          message = `User: ${username} replaced`;
+          code = 1;
+      } else {
+          userIndex = -1;
+          message = `User: ${username} already exists`;
+          code = 100;
+      }
+    } else {
+      userIndex = users.length;
+      users.concat(user);
+      message = `User: ${username} added`;
+      code = 0;
+    }
   }
-  return userIndex;
+  return {
+    message,
+    code 
+  }
 }
 module.exports.users = users;
 module.exports.getUser = getUser;

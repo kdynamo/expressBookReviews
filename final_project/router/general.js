@@ -4,11 +4,21 @@ let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
 const bookUtils = require('../utils/books.utils.js');
 const public_users = express.Router();
+const addUser = require('../data/user.data.js').addUser;
 
 
 public_users.post("/register", (req,res) => {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+  const {
+    username,
+    password
+  } = req.body;
+
+  const user = {
+    username,
+    password
+  };
+  const addUserStatus = addUser(user, false);
+  return res.status(200).json(addUserStatus);
 });
 
 // Get the book list available in the shop
